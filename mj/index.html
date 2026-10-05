@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <form id="formProduto">
+      <div class="form-group">
+       <label for="nomeProduto"> Nome do Produto:</label>
+      <input type="text" id="nomeProduto" required placeholder="Ex:Teclado Mecẫnico">
+      </div>
+
+       <div class="form-group">
+        <label for="valorProduto">Valor (R$):</label>
+        <input type="number" id="valorProduto" step="0.01" min="0" required placeholder="Ex:150.00">
+       </div>
+
+       <button type="submit">Cadastrar</button>
+      </form> 
+
+      <h2> Lista de Produtos</h2>
+
+      <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+
+    <tbody id="tabelaCorpo">
+
+    </tbody>
+      </table>
+      <script>
+    
+    // Seleciona o formulário e o corpo da tabela pelo ID
+    const formProduto = document.getElementById('formProduto');
+    const tabelaCorpo = document.getElementById('tabelaCorpo');
+
+    // Adiciona um evento que escuta quando o formulário é enviado (botão "Cadastrar")
+    formProduto.addEventListener('submit', function(event) {
+      // Impede o comportamento padrão de recarregar a página após o envio do formulário
+      event.preventDefault();
+
+      // Captura os valores digitados nos campos de input
+      const nome = document.getElementById('nomeProduto').value;
+      const valor = parseFloat(document.getElementById('valorProduto').value);
+
+      // Formata o valor numérico para a moeda brasileira (ex: R$ 150,00)
+      const valorFormatado = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+      // Cria um elemento de linha (<tr>)
+      const novaLinha = document.createElement('tr');
+
+      // Define o conteúdo HTML das células da nova linha
+      novaLinha.innerHTML = `
+        <td>${nome}</td>
+        <td>${valorFormatado}</td>
+      `;
+
+      // Insere a nova linha criada dentro do corpo da tabela (<tbody>)
+      tabelaCorpo.appendChild(novaLinha);
+
+      // Limpa os campos do formulário para o próximo cadastro
+      formProduto.reset();
+
+      // Foca automaticamente no campo do nome para agilizar o próximo cadastro
+      document.getElementById('nomeProduto').focus();
+    });
+  </script>
+      
+</body>
+</html>
